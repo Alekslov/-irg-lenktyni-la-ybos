@@ -21,16 +21,26 @@ class BetterController extends Controller
      */
     public function index(Request $request)
     {
-        if ('bet' == $request->sort) {
-            $betters = Better::orderByDESC('bet')->get();
+        $horses = Horse::all();
+        if($request->horse_id) {
+            $betters = Better::where('horse_id', $request->horse_id)->get();
+            $filterBy = $request->horse_id;
         }
         else {
             $betters = Better::all();
         }
-        return view('better.index', ['betters' => $betters]);
-        
+        $horses = $horses->sortBy('name');
         // $betters = Better::all();
-        // return view('better.index', ['betters' => $betters]);
+        $betters = $betters->sortByDESC('bet');
+        return view('better.index', [
+            'horses' => $horses,
+            'betters' => $betters,
+            'filterBy' => $filterBy ?? 0,
+            'sortBy' => $sortBy ?? 0
+            ]);
+        
+
+
     }
 
     /**
@@ -41,8 +51,11 @@ class BetterController extends Controller
     public function create()
     {
         $horses = Horse::all();
-        $horses = Horse::orderBy('name');
+        $horses = $horses->sortBy('name');
         return view('better.create', ['horses' => $horses]);
+        // $horses = Horse::all();
+        // $horses = Horse::orderBy('name');
+        // return view('better.create', ['horses' => $horses]);
     //     $horses = Horse::all();
     //    return view('better.create', ['horses' => $horses]);
     }
@@ -84,8 +97,11 @@ class BetterController extends Controller
     public function edit(Better $better)
     {
         $horses = Horse::all();
-        $horses = Horse::orderBy('name');
-        return view('horse.index', ['horses' => $horses]);
+        $horses = $horses->sortBy('name');
+        return view('better.edit', ['better' => $better, 'horses' => $horses]);
+        // $horses = Horse::all();
+        // $horses = Horse::orderBy('name');
+        // return view('horse.index', ['horses' => $horses]);
       
         // return view('horse.index', ['horses' => $horses]);
         // $horses = Horse::all();

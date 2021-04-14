@@ -9,8 +9,24 @@
            <div class="card">
                <div class="card-header">
                    <h2>Lažybininkų sąrašas</h2>
-                   <a href="{{route('better.index', ['sort' => 'bet'])}}" class="sort" > Rušiuoti pagal statymą</a>
-                   <a href="{{route('better.index')}}" class="sort"> Default </a>
+                   <div class="make-inline">
+                    <form action="{{route('better.index')}}" method="get" class="make-inline">
+                        <div class="form-group make-inline">
+                            <label>Horse: </label>
+                            <select class="form-control" name="horse_id">
+                                <option value="0" disabled @if($filterBy==0) selected @endif>Select horse</option>
+                                @foreach ($horses as $horse)
+                                <option value="{{$horse->id}}" @if($filterBy==$horse->id) selected @endif>
+                                    {{$horse->name}} 
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info ">Filter</button>
+                    </form>
+                    <a href="{{route('better.index')}}" class="btn btn-info">Clear filter</a>
+                   {{-- <a href="{{route('better.index', ['sort' => 'bet'])}}" class="sort" > Rušiuoti pagal statymą</a>
+                   <a href="{{route('better.index')}}" class="sort"> Default </a> --}}
                 </div>
 
                <div class="card-body">

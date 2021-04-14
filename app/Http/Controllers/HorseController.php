@@ -54,24 +54,24 @@ class HorseController extends Controller
                 'horse_name' => ['required', 'min:3', 'max:100'],
                 
             ],
-     [
-     'horse_name.min' => 'Vardas turi sudaryti nuo 3 iki 100 raidžių.',
-     
-     ]
+            [
+            'horse_name.min' => 'Vardas turi sudaryti nuo 3 iki 100 raidžių.',
+            
+            ]
             );
             if ($validator->fails()) {
                 $request->flash();
                 return redirect()->back()->withErrors($validator);
             }
      
-        $horse = new horse;
-        $horse->name = $request->horse_name;
-        $horse->wins = $request->horse_wins;
-        $horse->runs = $request->horse_runs;
-        $horse->about = $request->horse_about;
+            $horse = new horse;
+            $horse->name = $request->horse_name;
+            $horse->wins = $request->horse_wins;
+            $horse->runs = $request->horse_runs;
+            $horse->about = $request->horse_about;
 
-        $horse->save();
-        return redirect()->route('horse.index')->with('success_message', 'Sekmingai pridėtas.');
+            $horse->save();
+            return redirect()->route('horse.index')->with('success_message', 'Sekmingai pridėtas.');
 
     }
 
@@ -83,7 +83,7 @@ class HorseController extends Controller
      */
     public function show(Horse $horse)
     {
-        //
+        return view('horse.show', ['horse' => $horse]);
     }
 
     /**

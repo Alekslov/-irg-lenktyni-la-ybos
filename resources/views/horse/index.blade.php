@@ -24,6 +24,7 @@
                                 
                             </div>
                             <div class="list-line__buttons">
+                                <a href="{{route('horse.show',[$horse])}}" class="btn btn-secondary">Informacija</a>
                                 <a href="{{route('horse.edit',[$horse])}}" class="btn btn-info">Redaguoti</a>
                                 <form method="POST" action="{{route('horse.destroy', [$horse])}}">
                                     @csrf
